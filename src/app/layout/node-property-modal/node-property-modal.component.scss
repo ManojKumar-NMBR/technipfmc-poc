@@ -1,0 +1,55 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.card {
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+
+.card-title {
+    font-size: 14px;
+}
+
+label{
+    text-transform: capitalize;
+    // font-size: 13px;
+    font-weight: 600;
+}
+
+::ng-deep .modal-dialog {
+    max-width: 95vw !important;
+}
+
+.modal-content {
+    height: 93vh !important;
+}
+
+.modal-header {
+    padding: 0.6rem 1.0rem;
+}
+
+.modal-body {
+    overflow-y: scroll;
+}
+
+.tab-content {
+    padding: 1rem;
+}
+
+.tab-content .table {
+    th, td {
+        padding: 5px;
+        border: none;
+    }
+}
+
+.input-group-append {
+    width: 30%;
+}
+
+.select-group-append {
+    padding: 4px 4px;
+    border-radius: 0;
+    background-color: beige;
+    box-shadow: 2px 0 2px rgba(0,0,0,.1);
+}

@@ -1,0 +1,33 @@
+.modal-content {
+   color: black;
+   text-align: center;
+}
+
+.modal-header {
+
+  padding: 10px 1rem !important;
+
+  // To fix title at center position, set margin as auto
+  .modal-title {
+    margin: auto;
+  }
+
+  // Important to position close button
+  .close {
+    margin: -10px -1rem -10px 0;
+  } 
+}
+
+.modal-body {
+    text-transform: none;
+}
+
+.modal-footer {
+
+  // border-top: 1px solid #dee2e6;
+
+  .btn {
+      margin-left: 20px;
+      padding: 6px 20px;
+  }
+}

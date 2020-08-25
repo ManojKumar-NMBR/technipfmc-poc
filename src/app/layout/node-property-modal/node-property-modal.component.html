@@ -1,0 +1,160 @@
+  <div class=modal-content>
+    <div class="modal-header">
+      <h4 class="modal-title">{{nodeValues.nodeName}}</h4>
+      <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="nodePropertyForm">
+        <div class="card card-body">
+          <div class="row">
+
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                          <th>Node Id</th>
+                          <th>Node Name</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                        <tr>
+                          <td>{{nodeValues.nodeId}}</td>
+                          <td>{{nodeValues.nodeName}}</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+            <div *ngFor="let prop of nodePropertyParent" class="form-group col-sm-6 col-md-6 col-lg-6">
+                <label for="{{prop.nodePropertyName}}">{{convertLabelCase(prop.nodePropertyName)}}</label>
+                <input type="{{prop.nodePropertyDataType}}" class="form-control" [formControlName]="prop.nodePropertyName" id="{{prop.nodePropertyName}}">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <ngb-tabset (tabChange)="onTabChange($event)">
+                  <ngb-tab id="tab1" title="Pump Design Data">
+                      <ng-template ngbTabContent>
+                        <div class="tab-content">
+                          <div class="row">
+
+                              <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                                <table class="table">
+                                    <col style="width:40%">
+                                    <col style="width:60%">
+                                  <tbody>
+                                      <tr *ngFor="let prop of nodePropertyTab1.slice(0, Math.ceil(nodePropertyTab1.length/2))">
+                                        <td><label for="{{prop.nodePropertyName}}">{{convertLabelCase(prop.nodePropertyName)}}</label></td>
+                                        <td>  
+                                          <div class="input-group mb-3">
+                                            <input type="{{prop.nodePropertyDataType}}" class="form-control" [formControlName]="prop.nodePropertyName" id="{{prop.nodePropertyName}}">
+                                            <div *ngIf="prop.nodePropertyMeasureUnit != '' && prop.nodePropertyMeasureUnit != null" class="input-group-append">
+                                                <select class="select-group-append form-control" [formControlName]="prop.nodePropertyName + '_unit'" id="{{prop.nodePropertyName + '_unit'}}">
+                                                    <option *ngFor="let unit of nodePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                      {{unit.unitName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                                <table class="table">
+                                    <col style="width:40%">
+                                    <col style="width:60%">
+                                  <tbody>
+                                      <tr *ngFor="let prop of nodePropertyTab1.slice(Math.ceil(nodePropertyTab1.length/2))">
+                                        <td><label for="{{prop.nodePropertyName}}">{{convertLabelCase(prop.nodePropertyName)}}</label></td>
+                                        <td>  
+                                          <div class="input-group mb-3">
+                                            <input type="{{prop.nodePropertyDataType}}" class="form-control" [formControlName]="prop.nodePropertyName" id="{{prop.nodePropertyName}}">
+                                            <div *ngIf="prop.nodePropertyMeasureUnit != '' && prop.nodePropertyMeasureUnit != null" class="input-group-append">
+                                                <select class="select-group-append form-control" [formControlName]="prop.nodePropertyName + '_unit'" id="{{prop.nodePropertyName + '_unit'}}">
+                                                    <option *ngFor="let unit of nodePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                      {{unit.unitName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                  </ngb-tab>
+                  <ngb-tab id="hydraulic" title="Hydraulic Tab">
+                      <ng-template ngbTabContent>
+                          <div class="tab-content">
+                            <div class="row">
+
+                                <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                                    <table class="table">
+                                        <col style="width:40%">
+                                        <col style="width:60%">
+                                        <tbody>
+                                          <tr *ngFor="let prop of nodePropertyTab2.slice(0, Math.ceil(nodePropertyTab2.length/2))">
+                                            <td><label for="{{prop.nodePropertyName}}">{{convertLabelCase(prop.nodePropertyName)}}</label></td>
+                                            <td>  
+                                              <div class="input-group mb-3">
+                                                <input type="{{prop.nodePropertyDataType}}" class="form-control" [formControlName]="prop.nodePropertyName" id="{{prop.nodePropertyName}}">
+                                                <div *ngIf="prop.nodePropertyMeasureUnit != '' && prop.nodePropertyMeasureUnit != null" class="input-group-append">
+                                                    <select class="select-group-append form-control" [formControlName]="prop.nodePropertyName + '_unit'" id="{{prop.nodePropertyName + '_unit'}}">
+                                                        <option *ngFor="let unit of nodePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                          {{unit.unitName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                                    <table class="table">
+                                        <col style="width:40%">
+                                        <col style="width:60%">
+                                      <tbody>
+                                          <tr *ngFor="let prop of nodePropertyTab2.slice(Math.ceil(nodePropertyTab2.length/2))">
+                                            <td><label for="{{prop.nodePropertyName}}">{{convertLabelCase(prop.nodePropertyName)}}</label></td>
+                                            <td>  
+                                              <div class="input-group mb-3">
+                                                <input type="{{prop.nodePropertyDataType}}" class="form-control" [formControlName]="prop.nodePropertyName" id="{{prop.nodePropertyName}}">
+                                                <div *ngIf="prop.nodePropertyMeasureUnit != '' && prop.nodePropertyMeasureUnit != null" class="input-group-append">
+                                                    <select class="select-group-append form-control" [formControlName]="prop.nodePropertyName + '_unit'" id="{{prop.nodePropertyName + '_unit'}}">
+                                                        <option *ngFor="let unit of nodePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                          {{unit.unitName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                            </div>
+                          </div>
+                      </ng-template>
+                  </ngb-tab>
+              </ngb-tabset>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" (click)="okModal()">Apply</button>
+      <button class="btn btn-outline-secondary" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>

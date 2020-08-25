@@ -1,0 +1,71 @@
+<!-- Adding nav-bar for poc purpose -->
+
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #ced4da;">
+        <!-- <a class="navbar-brand" href="#">NMBR  &nbsp;&nbsp;&nbsp;&nbsp;</a> -->
+        <img src="assets/images/technipLogo.png" alt="TechnipFMC" class="navbar-brand">
+        <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/home']" href="javascript:void()">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" [routerLink]="['/dxf']" href="javascript:void()">DXF Viewer <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void()">Express</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="javascript:void()">Window</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void()">Help</a>
+            </li>
+          </ul>
+          <!-- <button class="btn btn-outline-primary my-2 my-sm-0 btn-signout" type="button" (click)="signOut()">SignOut</button> -->
+          <ul class="navbar-nav profile-icon">
+            <li class="nav-item dropdown" ngbDropdown>
+              <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                  <i class="fa fa-user"></i>
+                  <b class="caret"></b>
+              </a>
+              <div class="dropdown-menu-right  dropdown-user about" ngbDropdownMenu>
+                  <a [routerLink]="['']" [routerLinkActive]="['router-link-active']" class="dropdown-item" href="javascript:void(0)">
+                      <i class="fa fa-fw fa-user"></i> {{'User Profile'}}
+                  </a>
+    
+                  <a class="dropdown-item" (click)="signOut()" href="javascript:void(0)">
+                      <i class="fa fa-sign-out fa-fw"></i> {{ 'SignOut' }}
+                  </a>
+              </div>
+          </li>
+          </ul>
+        </div>
+      </nav>
+
+<!-- Nav bar end for poc purpose -->
+
+<div class="container mt-3">
+  <div role="form">
+      <div class="form-group col-sm-12">
+          <label for="exampleInputFile">Choose a DXF file</label>
+          <input type="file" class="form-control-file" accept=".dxf" id="dxf" name="file">
+          <div class="progress progress-striped" style="width: 300px;">
+              <div id="file-progress-bar" class="progress-bar progress-bar-success" role="progressbar" style="width: 0">
+              </div>
+          </div>
+          <div id="file-description" class="help-block"></div>
+      </div>
+      <code class="text-secondary">While hovering over the canvas: Right click to pan. Mouse wheel to zoom in an out.</code>
+  </div>
+  <div id="cad-view">
+    
+  </div>
+  <div id="dxf-content-container" [hidden]="true">
+      <pre id="dxf-content">
+
+      </pre>
+  </div>
+</div>

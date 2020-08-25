@@ -1,0 +1,223 @@
+<div class=modal-content>
+    <div class="modal-header">
+      <h4 class="modal-title">Stream Data</h4>
+      <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="linePropertyForm">
+        <div class="card card-body">
+          <div class="row">
+
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <!-- <th>Stream Id</th> -->
+                    <th>Stream Name</th>
+                    <th *ngIf="lineValues.streamDesc != ''">Stream Description</th>
+                    <th>Criteria Check</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <!-- <td>{{lineValues.edgeId}}</td> -->
+                    <td><input type="text" class="form-control" [formControl]="streamNameModel"></td>
+                    <td *ngIf="lineValues.streamDesc != ''">{{lineValues.streamDesc}}</td>
+                    <td >
+                      <i *ngIf="!isValidCriteria" class="fa fa-times text-danger fa-2x" aria-hidden="true"></i>
+                      <i *ngIf="isValidCriteria" class="fa fa-check text-success fa-2x" aria-hidden="true"></i>
+                    </td>
+                  </tr>
+                </tbody>
+                    
+              </table>
+            </div>
+            <div *ngFor="let prop of linePropertyTabParent" class="form-group col-sm-6 col-md-6 col-lg-6">
+              <label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label>
+              <div class="input-group mb-3">
+                <input type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                    <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                        <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                          {{unit.unitName}}
+                        </option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <ngb-tabset (tabChange)="onTabChange($event)">
+                  <ngb-tab id="tab1" title="Liquid">
+                      <ng-template ngbTabContent>
+                        <div class="tab-content">
+                          <div class="row">
+
+                              <div class="col-sm-12 table-responsive">
+                                <table class="table">
+                                    <col style="width:20%">
+                                    <col style="width:60%">
+                                  <tbody>
+                                      <tr *ngFor="let prop of linePropertyTab1">
+                                        <td><label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label></td>
+                                        <td>  
+                                          <div class="input-group mb-3">
+                                            <input type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                            <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                                                <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                                                    <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                      {{unit.unitName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                  </ngb-tab>
+                  <ngb-tab id="tab2" title="Gas">
+                      <ng-template ngbTabContent>
+                        <div class="tab-content">
+                          <div class="row">
+
+                              <div class="col-sm-12 table-responsive">
+                                <table class="table">
+                                    <col style="width:20%">
+                                    <col style="width:60%">
+                                  <tbody>
+                                      <tr *ngFor="let prop of linePropertyTab2">
+                                        <td><label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label></td>
+                                        <td>  
+                                          <div class="input-group mb-3">
+                                            <input type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                            <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                                                <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                                                    <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                      {{unit.unitName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                  </ngb-tab>
+                  <ngb-tab id="tab3" title="Pipe">
+                      <ng-template ngbTabContent>
+                        <div class="tab-content">
+                          <div class="row">
+
+                              <div class="col-sm-12 table-responsive">
+                                <table class="table">
+                                    <col style="width:20%">
+                                    <col style="width:60%">
+                                  <tbody>
+                                      <tr *ngFor="let prop of linePropertyTab3">
+                                        <td><label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label></td>
+                                        <td>  
+                                          <div class="input-group mb-3">
+                                            <input *ngIf="prop.linePropertyDataType != 'SELECT'" type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                            <select *ngIf="prop.linePropertyDataType == 'SELECT'" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                              <option value="" disabled>Select any option</option>
+                                              <option *ngFor="let val of prop.list" [value]="val.value">
+                                                {{val.name}}
+                                              </option>
+                                            </select>
+                                            <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                                                <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                                                    <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                      {{unit.unitName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                  </ngb-tab>
+                  <ngb-tab id="hydraulic" title="Hydraulic Calculation">
+                    <ng-template ngbTabContent>
+                      <div class="tab-content">
+                        <div class="row">
+
+                            <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                              <table class="table">
+                                  <col style="width:20%">
+                                  <col style="width:60%">
+                                <tbody>
+                                    <tr *ngFor="let prop of linePropertyTab4.slice(0, Math.ceil(linePropertyTab4.length/2))">
+                                      <td><label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label></td>
+                                      <td>  
+                                        <div class="input-group mb-3">
+                                          <input type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                          <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                                              <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                                                  <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                    {{unit.unitName}}
+                                                  </option>
+                                              </select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="col-lg-6 col-sm-12 col-md-6 table-responsive">
+                              <table class="table">
+                                  <col style="width:20%">
+                                  <col style="width:60%">
+                                  <tbody>
+                                    <tr *ngFor="let prop of linePropertyTab4.slice(Math.ceil(linePropertyTab4.length/2))">
+                                      <td><label for="{{prop.linePropertyName}}">{{convertLabelCase(prop.linePropertyName)}}</label></td>
+                                      <td>  
+                                        <div class="input-group mb-3">
+                                          <input type="{{prop.linePropertyDataType}}" class="form-control" [formControlName]="prop.linePropertyName" id="{{prop.linePropertyName}}">
+                                          <div *ngIf="prop.linePropertyMeasureUnit != '' && prop.linePropertyMeasureUnit != null" class="input-group-append">
+                                              <select class="select-group-append form-control" [formControlName]="prop.linePropertyName + '_unit'" id="{{prop.linePropertyName + '_unit'}}">
+                                                  <option *ngFor="let unit of linePropertyMeasurementUnitList" [value]="unit.unitValue">
+                                                    {{unit.unitName}}
+                                                  </option>
+                                              </select>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngb-tab>
+              </ngb-tabset>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" (click)="okModal()">Apply</button>
+      <button class="btn btn-outline-secondary" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>

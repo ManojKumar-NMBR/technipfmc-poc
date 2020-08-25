@@ -1,0 +1,191 @@
+<!-- <app-header></app-header>
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-sidebar>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+    <router-outlet></router-outlet>
+</section> -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #ced4da;">
+    <!-- <a class="navbar-brand" href="#">NMBR  &nbsp;&nbsp;&nbsp;&nbsp;</a> -->
+    <img src="assets/images/technipLogo.png" alt="TechnipFMC" class="navbar-brand">
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/home']" href="javascript:void()">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/dxf']" href="javascript:void()">DXF Viewer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void()">Express</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void()">Window</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void()">Help</a>
+        </li>
+      </ul>
+      <!-- <button class="btn btn-outline-primary my-2 my-sm-0 btn-signout" type="button" (click)="signOut()">SignOut</button> -->
+      <ul class="navbar-nav profile-icon">
+        <li class="nav-item dropdown" ngbDropdown>
+          <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+              <i class="fa fa-user"></i>
+              <b class="caret"></b>
+          </a>
+          <div class="dropdown-menu-right  dropdown-user about" ngbDropdownMenu>
+              <a [routerLink]="['']" [routerLinkActive]="['router-link-active']" class="dropdown-item" href="javascript:void(0)">
+                  <i class="fa fa-fw fa-user"></i> {{'User Profile'}}
+              </a>
+
+              <a class="dropdown-item" (click)="signOut()" href="javascript:void(0)">
+                  <i class="fa fa-sign-out fa-fw"></i> {{ 'SignOut' }}
+              </a>
+          </div>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <!-- <div class="row mt-3 ">
+      
+        <div class="col-2">File</div>
+        <div class="col-2">Save</div>
+        <div class="col-2">Edit</div>
+        <div class="col-2">Delete</div>
+        <div class="col-2">View</div>
+        <div class="col-2"></div>
+
+    </div> -->
+
+    <!-- <div class="row mt-3"> -->
+      
+        <!-- <div class="col-2">Group1</div>
+        <div class="col-2">Group2</div>
+        <div class="col-2">Group3</div>
+        <div class="col-2">Group4</div>
+        <div class="col-2">Group5</div>
+        <div class="col-2">Group6</div> -->
+        <div class="col-sm-12">
+            <form [formGroup]="workflowForm" class="workflow-form form-inline py-3">
+                <div class="form-group col-sm-3">
+                  <label for="workflowName">Name:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="workflowName" formControlName="workflowName" placeholder="Enter Workflow Name" class="form-control">
+                    </label>
+                </div>
+                <div class="col-sm-9">
+                    <button type="button" class="btn btn-outline-secondary float-right" (click)="reDraw()">Clear</button>
+                    <button type="button" class="btn btn-outline-secondary float-right" (click)="saveWorkflow()">Save</button>
+                    <button type="button" class="btn btn-outline-secondary float-right" (click)="openModal(wkfContent)">Open</button>
+                    <button type="button" class="btn btn-outline-secondary float-right" (click)="newWorkflow()">New Workflow</button>
+                    <button type="button" class="btn btn-outline-secondary float-right" (click)="import()">
+                      <i [ngClass]="{'fa fa-fw': true, 'fa-download': !fileLoading, 'fa-spinner fa-pulse': fileLoading }"></i>Import
+                      <input type="file" id="importFile" accept=".xlsx, .xls, .csv" (change)="handleFileImport($event.target.files)" [hidden]="true">
+                    </button>
+                </div>
+            </form>
+          
+        </div>
+
+    <!-- </div> -->
+
+    <div *ngIf="errors?.length > 0" class="row alert alert-danger">
+        <div *ngFor="let error of errors">
+            <i class="fa fa-warning fa-fw"></i><span>{{error}}</span>
+        </div>
+    </div>
+
+    <div *ngIf="success?.length > 0" class="row alert alert-success">
+        <div *ngFor="let success of success">
+            <i class="fa fa-check fa-fw"></i><span>{{success}}</span>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-3 shape-area">
+          <div class="col-12 side-panal">
+            <h3 class="mt-3">Shapes</h3>
+
+            <div class="input-group mt-3 mb-3">
+              <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+              </div>
+            </div>
+
+            <div class="items">
+                <div class="item-img" *ngFor="let image of nodeData"> 
+                        <img draggable id="drag1" [dragData]="image" src="assets/images/icons/{{image.src}}" alt={{image.nodeName}} title={{image.nodeName}}>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div #dropContainer class="col-9 drawing-area" droppable (onDrop)="onItemDrop($event)">
+          <div class="col-12 main-panal">
+          <div class="item-main-img" *ngFor="let mod of modules"> 
+            <div id={{mod.nodeId}} plumbItem class="img" (dblclick)="openNodePropertyModal(mod)" (contextmenu)="displayContextMenu(mod, $event)" 
+              [ngStyle]="{'left': mod.xAxis, 'top': mod.yAxis, 'cursor': 'pointer'}"
+              [targetAnchor]="getAnchor(1, mod)">
+                <!-- <div class="trash" (click)="deleteNode(mod.nodeId)">&#10006;</div> -->
+                <img src="assets/images/icons/{{mod.source}}" alt={{mod.nodeName}}>
+                <div plumbConnect class="connect-icon" [sourceAnchor]="getAnchor(0, mod)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #wkfContent let-modal>
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Open Workflow</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.close('N')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <select class="form-control" [(ngModel)]="selectedWorkflow">
+              <option value="" disabled>Select Workflow</option>
+              <option *ngFor="let wkf of workflowList" [value]="wkf.workflowId">{{wkf.workflowName}}</option>
+            </select>
+        </div>
+        <div class="modal-footer ">
+          <div>
+              <button class="btn btn-outline-secondary" [disabled]="selectedWorkflow == ''" (click)="modal.close('Y')">Open</button>
+          </div>
+        </div>
+  </ng-template>
+
+  <ng-template #importContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Imported Data Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.close('N')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedStream">
+          <option value="" disabled>Select Stream Name</option>
+          <option *ngFor="let val of importedDataStreamList" [value]="val.nodeListId">
+            {{val.nodeListName}} 
+            <span *ngIf="val.nodeListDesc != null && val.nodeListDesc.trim() != '' && val.nodeListName != val.nodeListDesc">
+              - {{val.nodeListDesc}}
+            </span>
+          </option>
+        </select>
+    </div>
+    <div class="modal-footer ">
+      <div>
+          <button class="btn btn-outline-secondary" [disabled]="selectedStream == ''" (click)="modal.close('Y')">Map Data</button>
+      </div>
+    </div>
+</ng-template>
+
+  <ul class="context-menu dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+    <a (click)="performContextMenuAction('mapdata', importContent)"><li class="dropdown-item"><i class="fa fa-paperclip fa-fw"></i>Map Data</li></a>
+    <a (click)="performContextMenuAction('exportData')"><li class="dropdown-item"><i class="fa fa-file-excel-o fa-fw"></i>Export to Excel</li></a>
+    <a (click)="performContextMenuAction('delete')"><li class="dropdown-item text-danger"><i class="fa fa-trash fa-fw"></i>Delete</li></a>
+  </ul>

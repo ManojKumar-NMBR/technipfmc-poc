@@ -1,0 +1,208 @@
+* {
+    -webkit-transition: margin-left 0.2s ease-in-out;
+    -moz-transition: margin-left 0.2s ease-in-out;
+    -ms-transition: margin-left 0.2s ease-in-out;
+    -o-transition: margin-left 0.2s ease-in-out;
+    transition: margin-left 0.2s ease-in-out;
+}
+.main-container {
+    margin-top: 56px;
+    margin-left: 235px;
+    padding: 15px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+}
+.collapsed {
+    margin-left: 60px;
+}
+@media screen and (max-width: 992px) {
+    .main-container {
+        margin-left: 0px !important;
+    }
+}
+@media print {
+    .main-container {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+}
+
+
+.list-group-horizontal {
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.list-group-item{
+min-width: 200px;
+text-align: center;
+font-weight: bold;
+}
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}
+.col-2{
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;;
+}
+.shape-area {
+    padding-right: 0;
+}
+.drawing-area {
+    padding-left: 0;
+}
+.side-panal{
+    background-color: white; //#eaecec8c;
+    height: calc(100vh - 137px);
+    border: 1px solid #ced4da;
+    // border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 1px 1px 2px 1px rgb(0, 0, 0, 0.2);
+    z-index: 99;
+    overflow-y: auto;
+}
+.main-panal{
+    background-color: white; //#f4f4f48c;//#cbf0fc;
+    height: calc(100vh - 137px);
+    border: 1px solid #ced4da;
+    // border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: relative;
+    display: inline-block;
+}
+.item-img{
+    display: inline-block;
+    margin: 15px;
+    cursor: move;
+}
+
+.img{
+    position: absolute;
+    // height: 50px;
+    // width: 50px;
+    // // margin: 15px;
+    // border: 1px solid #000000;
+    text-align: center;
+    img{
+        display: inline-block;
+        position: relative;
+        cursor: move;
+        user-select: none;
+        // top: 11px;
+
+    }
+    .trash{
+        position: absolute;
+        cursor: pointer;
+        font-size: 11px;
+        margin-left: 80px;
+    }
+}
+
+.connect-icon {
+    position: absolute;
+    top: 42.33%;
+    left: 100%;
+    width: 3px;
+    height: 15.77%;
+    // background-color: #f9b800;
+    cursor: pointer;
+    box-shadow: 0px 0px 1px #f94500;
+    -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+    -moz-transition: -moz-box-shadow 0.25s ease-in;
+    transition: box-shadow 0.25s ease-in;
+    /* font-size: 1em;
+	font-size: 10px; */
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.connect-icon:hover {
+    width: 14px;
+    height: 27%;
+    top: 37.33%;
+    transition: width 0.2s;
+    border: none;
+    background-color: rgba(30,144,255);
+}
+.drop-container {
+    overflow: auto;
+    position: relative;
+}
+
+.btn {
+    margin-right: 8px;;
+}
+
+.btn.disabled, .btn:disabled {
+    cursor: not-allowed;
+}
+/* .btn-signout{
+    margin-left: auto;
+    width: 110px;
+    padding: 3px;
+}
+
+.btn-signout:hover {
+    font-weight: bold;
+} */
+.profile-icon{
+    margin-left: auto;
+    a{
+        color: #4B1F68;
+    }
+}
+.navbar{
+    img{
+        height: 40px;
+    width: 155px;
+    }
+}
+
+.site-logo {
+    height: auto;
+    width: 134px;
+    max-width: 100%;
+    display: inline-block;
+}
+
+::ng-deep .edgeLabel {
+    user-select: none;
+    color: black;
+    border: 1px solid black;
+    background: white;
+    padding: 0px 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+// default css class on hovering on jsPlumb connector
+::ng-deep ._jsPlumb_hover {
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.context-menu {
+    padding: 0;
+    overflow: hidden;
+    display: none;
+
+    li {
+        color: #4B1F68;
+        user-select: none;
+        cursor: pointer;
+        line-height: 30px;
+        padding: 0.25rem 0.75rem;
+
+        &:hover {
+            background-color: lightgrey;
+        }
+    }
+}
